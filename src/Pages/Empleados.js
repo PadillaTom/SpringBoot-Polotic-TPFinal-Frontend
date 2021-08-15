@@ -1,10 +1,41 @@
 import React from "react";
+import MCDatepicker from "mc-datepicker";
 
 //  Crear STATES
 //  onCLick , onChange,
 //  Fechas
+//  Date Picker: Empleado Fecha Nacimiento:
 
 const Empleados = () => {
+  const picker3 = MCDatepicker.create({
+    el: "#datepickerEmpFechaNac",
+    dateFormat: "dd-mm-yyyy",
+    customWeekDays: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+    ],
+    customMonths: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sept.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+    customClearBTN: "Borrar",
+    customCancelBTN: "Anular",
+  });
   return (
     <div className="section main-sect">
       <h1 className="section-title">Empleados</h1>
@@ -70,6 +101,9 @@ const Empleados = () => {
                       required="true"
                       id="datepickerEmpFechaNac"
                       placeholder="Seleccionar Fecha"
+                      onClick={() => {
+                        picker3.open();
+                      }}
                     />
                   </div>
                   <div class="res-factSingleInput">
