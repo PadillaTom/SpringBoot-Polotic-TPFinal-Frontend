@@ -516,6 +516,7 @@ a {
 .emp-tableContainer > table > tbody > tr > td {
   border: 1px solid #dddddd;
   padding: 1rem 0.4rem;
+  overlflow: hidden;
 }
 .emp-tableContainer > table > tbody > tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -525,12 +526,12 @@ a {
 }
 
 .emp-tableIconsContainer {
-  width: 100%;
-  height: 100%;
+  width: 101%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  overlflow: hidden;
 }
 
 .emp-tableIcon {

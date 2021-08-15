@@ -1,9 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+
 import "./CSS/index.css";
-import {App} from "./Components/App";
+
+import { App } from "./Components/App";
+import { UsuariosProvider } from "./Context/usuarios_context";
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+  <UsuariosProvider>
+    <App />
+  </UsuariosProvider>,
+  document.getElementById("root")
 );

@@ -1,57 +1,77 @@
 import React from "react";
 import MCDatepicker from "mc-datepicker";
 
+import { useUsuariosContext } from "../Context/usuarios_context";
+
+import { Error, Loading } from "../Components/Utils";
+
+// Date Picker: Fecha Nac Empleado.
+const picker = MCDatepicker.create({
+  el: "#datepickerEmpFechaNac",
+  dateFormat: "dd-mm-yyyy",
+  customWeekDays: [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miercoles",
+    "Jueves",
+    "Viernes",
+    "Sabado",
+  ],
+  customMonths: [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Sept.",
+    "Oct.",
+    "Nov.",
+    "Dic.",
+  ],
+  customClearBTN: "Borrar",
+  customCancelBTN: "Anular",
+});
+
 //  Crear STATES
 //  onCLick , onChange,
 //  Fechas
 //  Date Picker: Empleado Fecha Nacimiento:
 
 const Empleados = () => {
-  const picker3 = MCDatepicker.create({
-    el: "#datepickerEmpFechaNac",
-    dateFormat: "dd-mm-yyyy",
-    customWeekDays: [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes",
-      "Sabado",
-    ],
-    customMonths: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Sept.",
-      "Oct.",
-      "Nov.",
-      "Dic.",
-    ],
-    customClearBTN: "Borrar",
-    customCancelBTN: "Anular",
-  });
+  const {
+    usuarios,
+    usuarioAdmin: admin,
+    usuarios_loading,
+    usuarios_error,
+  } = useUsuariosContext();
+
+  if (usuarios_loading) {
+    return <Loading></Loading>;
+  }
+  if (usuarios_error) {
+    return <Error></Error>;
+  }
+
   return (
     <div className="section main-sect">
       <h1 className="section-title">Empleados</h1>
-      <div class="emp-mainCenter">
-        <div class="section-title-underline"></div>
+      <div className="emp-mainCenter">
+        <div className="section-title-underline"></div>
 
         {/* <!--*** Add Empleado ***--> */}
-        <div class="emp-currentSession">
+        <div className="emp-currentSession">
           <h1>
             Usuario Actual: <span> Usuario </span>
           </h1>
         </div>
-        <div class="emp-addEmpContainer">
+        <div className="emp-addEmpContainer">
           <input
             type="submit"
-            class="emp-addEmp formBtn"
+            className="emp-addEmp formBtn"
             value="Nuevo Empleado"
             id="displayAddEmpForm"
             onclick="showForm();"
@@ -59,68 +79,68 @@ const Empleados = () => {
         </div>
 
         {/* Hidden Form */}
-        <div class="emp-addEmpHiddenForm" id="empForm">
+        <div className="emp-addEmpHiddenForm" id="empForm">
           <form
-            class="emp-addEmpForm"
+            className="emp-addEmpForm"
             action="SvUsuario"
             method="POST"
             id="myEmpForm"
           >
-            <div class="res-formCenter">
-              <div class="res-formSection">
-                <div class="res-formTitle">
+            <div className="res-formCenter">
+              <div className="res-formSection">
+                <div className="res-formTitle">
                   <h3>Nuevo Empleado</h3>
                   <p>Ingresar los datos del nuevo empleado.</p>
                 </div>
-                <div class="res-formInputsContainer res-facturacionContainer">
-                  <div class="res-factSingleInput">
-                    <label for="empUsername">Usuario:</label>
-                    <input type="text" name="empUsername" required="true" />
+                <div className="res-formInputsContainer res-facturacionContainer">
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empUsername">Usuario:</label>
+                    <input type="text" name="empUsername" required />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empPassword">Contraseña:</label>
-                    <input type="text" name="empPassword" required="true" />
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empPassword">Contraseña:</label>
+                    <input type="text" name="empPassword" required />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empDni">DNI:</label>
-                    <input type="text" name="empDni" required="true" />
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empDni">DNI:</label>
+                    <input type="text" name="empDni" required />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empNombre">Nombre:</label>
-                    <input type="text" name="empNombre" required="true" />
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empNombre">Nombre:</label>
+                    <input type="text" name="empNombre" required />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empApellido">Apellido:</label>
-                    <input type="text" name="empApellido" required="true" />
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empApellido">Apellido:</label>
+                    <input type="text" name="empApellido" required />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empFechaNac">Fecha Nac:</label>
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empFechaNac">Fecha Nac:</label>
                     <input
                       type="text"
                       name="empFechaNac"
-                      required="true"
+                      required
                       id="datepickerEmpFechaNac"
                       placeholder="Seleccionar Fecha"
                       onClick={() => {
-                        picker3.open();
+                        picker.open();
                       }}
                     />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empDireccion">Direccion:</label>
-                    <input type="text" name="empDireccion" required="true" />
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empDireccion">Direccion:</label>
+                    <input type="text" name="empDireccion" required />
                   </div>
-                  <div class="res-factSingleInput">
-                    <label for="empCargo">Cargo:</label>
-                    <input type="text" name="empCargo" required="true" />
+                  <div className="res-factSingleInput">
+                    <label htmlFor="empCargo">Cargo:</label>
+                    <input type="text" name="empCargo" required />
                   </div>
                 </div>
               </div>
-              <div class="emp-addEmpFormBtns">
-                <input type="submit" value="Agregar" class="formBtn" />
+              <div className="emp-addEmpFormBtns">
+                <input type="submit" value="Agregar" className="formBtn" />
                 <button
                   type="button"
-                  class="formBtn cancelBtn"
+                  className="formBtn cancelBtn"
                   onclick="hideForm(); borrarCampos();"
                 >
                   Anular
@@ -130,8 +150,9 @@ const Empleados = () => {
           </form>
         </div>
         {/* End Hidden Form */}
+
         {/* Table */}
-        <div class="emp-tableContainer">
+        <div className="emp-tableContainer">
           <table>
             <thead>
               <tr>
@@ -147,25 +168,38 @@ const Empleados = () => {
               </tr>
             </thead>
             <tbody>
-              {/* Admin Emp */}
+              {/* Admin Usuario */}
               <tr style={{ backgroundColor: "#DCE9F9" }}>
+                <td>{admin[0]?.username}</td>
+                <td>{admin[0]?.password}</td>
                 <td>Admin</td>
                 <td>Admin</td>
                 <td>Admin</td>
                 <td>Admin</td>
                 <td>Admin</td>
                 <td>Admin</td>
-                <td>Admin</td>
-                <td>Admin</td>
-                <td class="emp-tableIconsContainer">
-                  <div>
-                    <div></div>
-                  </div>
-                  <div>
-                    <div></div>
-                  </div>
-                </td>
+                <td></td>
               </tr>
+              {/* All Usuarios */}
+              {usuarios.map((usu) => {
+                const { id, username, password } = usu;
+                return (
+                  <tr key={id}>
+                    <td>{username}</td>
+                    <td>{password}</td>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                    <td>Admin</td>
+                    <td className="emp-tableIconsContainer">
+                      <div>a</div>
+                      <div>b</div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
