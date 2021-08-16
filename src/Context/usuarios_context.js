@@ -8,6 +8,7 @@ import {
   GET_USUARIOS_ERROR,
 } from "../actions";
 
+import { usuariosEndpoint } from "../Utils/constants";
 // **********
 // STATE
 // **********
@@ -19,7 +20,6 @@ const initialState = {
 };
 
 // Creamos Context:
-const myAPI = "https://polotic-tpfinal.herokuapp.com/api/usuarios";
 const UsuariosContext = createContext();
 
 export const UsuariosProvider = ({ children }) => {
@@ -50,7 +50,7 @@ export const UsuariosProvider = ({ children }) => {
 
   // *** Component Mount ***
   useEffect(() => {
-    fetchUsuarios(myAPI);
+    fetchUsuarios(usuariosEndpoint);
   }, []);
 
   return (
