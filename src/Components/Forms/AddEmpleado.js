@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import MCDatepicker from "mc-datepicker";
 
@@ -38,6 +39,7 @@ const picker = MCDatepicker.create({
 });
 
 const AddEmpleado = () => {
+  const history = useHistory();
   const { closeEmpForm } = useOpenFormsContext();
   const [data, setData] = useState({
     username: "",
@@ -52,13 +54,15 @@ const AddEmpleado = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(usuariosEndpoint, {
-        username: data.username,
-        password: data.password,
-      })
-      .then(() => {})
-      .catch((error) => console.log(error));
+
+    const newUsuario = { username: data.username, password: data.password };
+    try {
+      axios.post(usuariosEndpoint, newUsuario);
+      closeEmpForm();
+      history.go(0);
+    } catch (error) {
+      console.log(`Error Post Empleados: ${error}`);
+    }
   };
 
   return (
