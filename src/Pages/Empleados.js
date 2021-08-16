@@ -100,7 +100,7 @@ const Empleados = () => {
                 {usuarios.map((usu) => {
                   const { id, username, password, usuEmpleado } = usu;
                   const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
-                  const dia = fechaDate.getDate() + 1;
+                  const dia = fechaDate.getDate();
                   const mes = fechaDate.getMonth() + 1;
                   const anio = fechaDate.getFullYear();
                   const finalDate = dia + "/" + mes + "/" + anio;
