@@ -20,7 +20,6 @@ const Empleados = () => {
   if (usuarios_error) {
     return <Error></Error>;
   }
-
   return (
     <div className="section main-sect">
       <h1 className="section-title">Empleados</h1>
@@ -75,30 +74,47 @@ const Empleados = () => {
               </thead>
               <tbody>
                 {/* Admin Usuario */}
-                <tr style={{ backgroundColor: "#DCE9F9" }}>
-                  <td>{admin[0]?.username}</td>
-                  <td>{admin[0]?.password}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                {admin.map((adm) => {
+                  const { id, username, password, usuEmpleado } = adm;
+                  const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
+                  const dia = fechaDate.getDate();
+                  const mes = fechaDate.getMonth() + 1;
+                  const anio = fechaDate.getFullYear();
+                  const finalDate = dia + "/" + mes + "/" + anio;
+                  return (
+                    <tr style={{ backgroundColor: "#DCE9F9" }} key={id}>
+                      <td>{username}</td>
+                      <td>{password}</td>
+                      <td>{adm.usuEmpleado.dniEmpleado}</td>
+                      <td>{adm.usuEmpleado.nombreEmpleado}</td>
+                      <td>{adm.usuEmpleado.apellidoEmpleado}</td>
+                      <td>{finalDate}</td>
+                      <td>{adm.usuEmpleado.direccionEmpleado}</td>
+                      <td>{adm.usuEmpleado.cargoEmpleado}</td>
+                      <td></td>
+                    </tr>
+                  );
+                })}
+
                 {/* All Usuarios */}
                 {usuarios.map((usu) => {
-                  const { id, username, password } = usu;
+                  const { id, username, password, usuEmpleado } = usu;
+                  const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
+                  const dia = fechaDate.getDate() + 1;
+                  const mes = fechaDate.getMonth() + 1;
+                  const anio = fechaDate.getFullYear();
+                  const finalDate = dia + "/" + mes + "/" + anio;
+
                   return (
                     <tr key={id}>
                       <td>{username}</td>
                       <td>{password}</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{usuEmpleado.dniEmpleado}</td>
+                      <td>{usuEmpleado.nombreEmpleado}</td>
+                      <td>{usuEmpleado.apellidoEmpleado}</td>
+                      <td>{finalDate}</td>
+                      <td>{usuEmpleado.direccionEmpleado}</td>
+                      <td>{usuEmpleado.cargoEmpleado}</td>
                       <td className="emp-tableIconsContainer">
                         <img
                           src={editEmpIcon}

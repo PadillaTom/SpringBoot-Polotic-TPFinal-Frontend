@@ -7,43 +7,48 @@ import { useOpenFormsContext } from "../../Context/openForms_context";
 
 import { usuariosEndpoint } from "../../Utils/constants";
 
-// Date Picker: Fecha Nac Empleado.
-const picker = MCDatepicker.create({
-  el: "#datepickerEmpFechaNac",
-  dateFormat: "dd-mm-yyyy",
-  customWeekDays: [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miercoles",
-    "Jueves",
-    "Viernes",
-    "Sabado",
-  ],
-  customMonths: [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Sept.",
-    "Oct.",
-    "Nov.",
-    "Dic.",
-  ],
-  customClearBTN: "Borrar",
-  customCancelBTN: "Anular",
-});
-
 const AddEmpleado = () => {
+  // Date Picker: Fecha Nac Empleado.
+  const picker = MCDatepicker.create({
+    el: "#fechaNacEmpleado",
+    dateFormat: "MM-dd-yyyy",
+    customWeekDays: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+    ],
+    customMonths: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sept.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+    customClearBTN: "Borrar",
+    customCancelBTN: "Anular",
+  });
   const history = useHistory();
   const { closeEmpForm } = useOpenFormsContext();
   const [data, setData] = useState({
     username: "",
     password: "",
+    dniEmpleado: "",
+    nombreEmpleado: "",
+    apellidoEmpleado: "",
+    fechaNacEmpleado: "",
+    direccionEmpleado: "",
+    cargoEmpleado: "",
   });
 
   const handleChange = (e) => {
@@ -54,8 +59,19 @@ const AddEmpleado = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const newUsuario = { username: data.username, password: data.password };
+    const fechaDate = new Date(data.fechaNacEmpleado);
+    const newUsuario = {
+      username: data.username,
+      password: data.password,
+      usuEmpleado: {
+        dniEmpleado: data.dniEmpleado,
+        nombreEmpleado: data.nombreEmpleado,
+        apellidoEmpleado: data.apellidoEmpleado,
+        fechaNacEmpleado: fechaDate,
+        direccionEmpleado: data.direccionEmpleado,
+        cargoEmpleado: data.cargoEmpleado,
+      },
+    };
     try {
       axios.post(usuariosEndpoint, newUsuario);
       closeEmpForm();
@@ -99,35 +115,74 @@ const AddEmpleado = () => {
               </div>
               <div className="res-factSingleInput">
                 <label htmlFor="empDni">DNI:</label>
-                <input type="text" name="empDni" required />
+                <input
+                  type="text"
+                  name="empDni"
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={data.dniEmpleado}
+                  id="dniEmpleado"
+                />
               </div>
               <div className="res-factSingleInput">
                 <label htmlFor="empNombre">Nombre:</label>
-                <input type="text" name="empNombre" required />
+                <input
+                  type="text"
+                  name="empNombre"
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={data.nombreEmpleado}
+                  id="nombreEmpleado"
+                />
               </div>
               <div className="res-factSingleInput">
                 <label htmlFor="empApellido">Apellido:</label>
-                <input type="text" name="empApellido" required />
+                <input
+                  type="text"
+                  name="empApellido"
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={data.apellidoEmpleado}
+                  id="apellidoEmpleado"
+                />
               </div>
               <div className="res-factSingleInput">
                 <label htmlFor="empFechaNac">Fecha Nac:</label>
                 <input
                   type="text"
                   name="empFechaNac"
-                  id="datepickerEmpFechaNac"
                   placeholder="Seleccionar Fecha"
-                  onClick={() => {
+                  onFocus={() => {
                     picker.open();
                   }}
+                  onChange={(e) => handleChange(e)}
+                  value={picker.onSelect((date, formatedDate) => {
+                    data.fechaNacEmpleado = formatedDate;
+                  })}
+                  id="fechaNacEmpleado"
                 />
               </div>
               <div className="res-factSingleInput">
                 <label htmlFor="empDireccion">Direccion:</label>
-                <input type="text" name="empDireccion" required />
+                <input
+                  type="text"
+                  name="empDireccion"
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={data.direccionEmpleado}
+                  id="direccionEmpleado"
+                />
               </div>
               <div className="res-factSingleInput">
                 <label htmlFor="empCargo">Cargo:</label>
-                <input type="text" name="empCargo" required />
+                <input
+                  type="text"
+                  name="empCargo"
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={data.cargoEmpleado}
+                  id="cargoEmpleado"
+                />
               </div>
             </div>
           </div>
