@@ -1,5 +1,7 @@
 import React from "react";
 
+import { myHabitaciones } from "../Utils/constants";
+
 const Habitaciones = () => {
   return (
     <div className="section main-sect">
@@ -15,24 +17,36 @@ const Habitaciones = () => {
 
       {/* Cards */}
       <div className="hab-cardsContainer">
-        <article class="hab-cardContainer">
-          <div class="hab-cardLeft">
-            <img src="assets/Images/singleRoom.jpeg" alt="Habitacion" />
-          </div>
-          <div class="hab-cardRight">
-            <div class="hab-cardRightCenter">
-              <div class="hab-cardRight-title">
-                <p>#001</p>
-                <h3>Habitacion Simple</h3>
-                <h6>Piso: 01</h6>
+        {myHabitaciones.map((hab) => {
+          const {
+            habitacionId,
+            pisoHabitacion,
+            nombreHabitacion,
+            precioNocheHabitacion,
+            tipoHabitacion,
+            imageUrl,
+          } = hab;
+          return (
+            <article class="hab-cardContainer" key={habitacionId}>
+              <div class="hab-cardLeft">
+                <img src={imageUrl} alt="Habitacion" />
               </div>
-              <div class="hab-cardRight-info">
-                <p>Tipo: Single Room</p>
-                <span>$150 / Noche</span>
+              <div class="hab-cardRight">
+                <div class="hab-cardRightCenter">
+                  <div class="hab-cardRight-title">
+                    <p>#00{habitacionId}</p>
+                    <h3>{nombreHabitacion}</h3>
+                    <h6>Piso: 0{pisoHabitacion}</h6>
+                  </div>
+                  <div class="hab-cardRight-info">
+                    <p>Tipo: {tipoHabitacion}</p>
+                    <span>${precioNocheHabitacion} / Noche</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </article>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

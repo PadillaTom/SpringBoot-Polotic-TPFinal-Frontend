@@ -8,7 +8,7 @@ import {
   GET_USUARIOS_ERROR,
 } from "../actions";
 
-import { usuariosEndpoint } from "../Utils/constants";
+import { usuariosEndpoint, usuariosEndpointLocal } from "../Utils/constants";
 // **********
 // STATE
 // **********
