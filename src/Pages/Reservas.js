@@ -110,49 +110,47 @@ const Reservas = () => {
 
   // Functions: Cantidad Personas.
   const getHabitacion = (e) => {
+    console.log(tipoHabitacion);
     // e.target.value = La Option.
     if (e.target.value === "Single Room") {
       setTipoHabitacion("Single Room");
-      let cantPers = document.getElementById("res-cantPers");
-      if (tipoHabitacion === "Single Room") {
-        cantPers.options[1].disabled = true;
-        cantPers.options[2].disabled = true;
-        cantPers.options[3].disabled = true;
-        cantPers.options[4].disabled = true;
-        cantPers.options[5].disabled = true;
-      }
     } else if (e.target.value === "Double Room") {
       setTipoHabitacion("Double Room");
-      let cantPers = document.getElementById("res-cantPers");
-      if (tipoHabitacion === "Double Room") {
-        cantPers.options[1].disabled = false;
-        cantPers.options[2].disabled = true;
-        cantPers.options[3].disabled = true;
-        cantPers.options[4].disabled = true;
-        cantPers.options[5].disabled = true;
-      }
     } else if (e.target.value === "Triple Room") {
       setTipoHabitacion("Triple Room");
-      let cantPers = document.getElementById("res-cantPers");
-      if (tipoHabitacion === "Triple Room") {
-        cantPers.options[1].disabled = false;
-        cantPers.options[2].disabled = false;
-        cantPers.options[3].disabled = true;
-        cantPers.options[4].disabled = true;
-        cantPers.options[5].disabled = true;
-      }
     } else if (e.target.value === "Multiple Room") {
       setTipoHabitacion("Multiple Room");
-      let cantPers = document.getElementById("res-cantPers");
-      if (tipoHabitacion === "Multiple Room") {
-        cantPers.options[1].disabled = false;
-        cantPers.options[2].disabled = false;
-        cantPers.options[3].disabled = false;
-        cantPers.options[4].disabled = false;
-        cantPers.options[5].disabled = false;
-      }
     }
   };
+
+  useEffect(() => {
+    let cantPers = document.getElementById("res-cantPers");
+    if (tipoHabitacion === "Single Room") {
+      cantPers.options[1].disabled = true;
+      cantPers.options[2].disabled = true;
+      cantPers.options[3].disabled = true;
+      cantPers.options[4].disabled = true;
+      cantPers.options[5].disabled = true;
+    } else if (tipoHabitacion === "Double Room") {
+      cantPers.options[1].disabled = false;
+      cantPers.options[2].disabled = true;
+      cantPers.options[3].disabled = true;
+      cantPers.options[4].disabled = true;
+      cantPers.options[5].disabled = true;
+    } else if (tipoHabitacion === "Triple Room") {
+      cantPers.options[1].disabled = false;
+      cantPers.options[2].disabled = false;
+      cantPers.options[3].disabled = true;
+      cantPers.options[4].disabled = true;
+      cantPers.options[5].disabled = true;
+    } else if (tipoHabitacion === "Multiple Room") {
+      cantPers.options[1].disabled = false;
+      cantPers.options[2].disabled = false;
+      cantPers.options[3].disabled = false;
+      cantPers.options[4].disabled = false;
+      cantPers.options[5].disabled = false;
+    }
+  }, [tipoHabitacion]);
 
   return (
     <div className="section main-sect">
