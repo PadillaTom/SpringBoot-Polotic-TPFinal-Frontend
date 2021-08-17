@@ -9,8 +9,8 @@ const usuarios_reducer = (state, action) => {
     return { ...state, usuarios_loading: true };
   }
   if (action.type === GET_USUARIOS_SUCCESS) {
-    const usuarioAdmin = action.payload.filter((usu) => usu.id === 1);
-    const restoUsuarios = action.payload.filter((usus) => usus.id !== 1);
+    const usuarioAdmin = action.payload.filter((usu) => usu.usuarioId === 1);
+    const restoUsuarios = action.payload.filter((usus) => usus.usuarioId !== 1);
     return {
       ...state,
       usuarios_loading: false,

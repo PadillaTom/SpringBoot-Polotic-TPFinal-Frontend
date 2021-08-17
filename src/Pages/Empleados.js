@@ -76,6 +76,7 @@ const Empleados = () => {
                 {/* Admin Usuario */}
                 {admin.map((adm) => {
                   const { usuarioId, username, password, usuEmpleado } = adm;
+                  console.log(adm);
                   const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
                   const dia = fechaDate.getDate();
                   const mes = fechaDate.getMonth() + 1;
