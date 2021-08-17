@@ -5,11 +5,24 @@ import MCDatepicker from "mc-datepicker";
 
 const Reservas = () => {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [tipoHabitacion, setTipoHabitacion] = useState("Triple Room");
+  const [tipoHab, setTipoHab] = useState("placeH");
+  const [picker2MinDate, setPicker2MinDate] = useState();
+  const [data, setData] = useState({
+    tipoHabitacion: "",
+    cantidadPersonas: "",
+    fechaDe: "",
+    fechaHasta: "",
+    dniHuesped: "",
+    nombreHuesped: "",
+    apellidoHuesped: "",
+    fechaNacHuesped: "",
+    direccionHuesped: "",
+    profesionHuesped: "",
+  });
 
   // Fecha De:
   const picker1 = MCDatepicker.create({
-    el: "#datepickerDe",
+    el: "#fechaDe",
     dateFormat: "dd-mm-yyyy",
     minDate: new Date(),
     customWeekDays: [
@@ -38,48 +51,50 @@ const Reservas = () => {
     customClearBTN: "Borrar",
     customCancelBTN: "Anular",
   });
-  let picker2 = document.getElementById("#datepickerHasta");
+
   picker1.onSelect((date) => {
     setIsDisabled(false);
     // Settear Min Date:
-    var myMin = new Date(date);
+    var myMin = date;
     myMin.setDate(date.getDate() + 1);
-
-    // Date Picker HASTA:
-    picker2 = MCDatepicker.create({
-      el: "#datepickerHasta",
-      minDate: myMin,
-      dateFormat: "dd-mm-yyyy",
-      customWeekDays: [
-        "Domingo",
-        "Lunes",
-        "Martes",
-        "Miercoles",
-        "Jueves",
-        "Viernes",
-        "Sabado",
-      ],
-      customMonths: [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Sep.",
-        "Oct.",
-        "Nov.",
-        "Dic.",
-      ],
-      customClearBTN: "Borrar",
-      customCancelBTN: "Anular",
-    });
+    setPicker2MinDate(myMin);
   });
+
+  // Date Picker HASTA:
+  let picker2 = MCDatepicker.create({
+    el: "#fechaHasta",
+    minDate: new Date(picker2MinDate),
+    dateFormat: "dd-mm-yyyy",
+    customWeekDays: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+    ],
+    customMonths: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sep.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+    customClearBTN: "Borrar",
+    customCancelBTN: "Anular",
+  });
+
   //  Date Picker: Fecha Nacimiento Huesped
   const picker3 = MCDatepicker.create({
-    el: "#datepickerFechaNac",
+    el: "#fechaNacHuesped",
     dateFormat: "dd-mm-yyyy",
     customWeekDays: [
       "Domingo",
@@ -110,47 +125,95 @@ const Reservas = () => {
 
   // Functions: Cantidad Personas.
   const getHabitacion = (e) => {
-    console.log(tipoHabitacion);
-    // e.target.value = La Option.
-    if (e.target.value === "Single Room") {
-      setTipoHabitacion("Single Room");
+    if (e.target.value === "placeH") {
+      setTipoHab("placeH");
+    } else if (e.target.value === "Single Room") {
+      setTipoHab("Single Room");
     } else if (e.target.value === "Double Room") {
-      setTipoHabitacion("Double Room");
+      setTipoHab("Double Room");
     } else if (e.target.value === "Triple Room") {
-      setTipoHabitacion("Triple Room");
+      setTipoHab("Triple Room");
     } else if (e.target.value === "Multiple Room") {
-      setTipoHabitacion("Multiple Room");
+      setTipoHab("Multiple Room");
     }
   };
 
   useEffect(() => {
-    let cantPers = document.getElementById("res-cantPers");
-    if (tipoHabitacion === "Single Room") {
-      cantPers.options[1].disabled = true;
-      cantPers.options[2].disabled = true;
-      cantPers.options[3].disabled = true;
-      cantPers.options[4].disabled = true;
-      cantPers.options[5].disabled = true;
-    } else if (tipoHabitacion === "Double Room") {
-      cantPers.options[1].disabled = false;
-      cantPers.options[2].disabled = true;
-      cantPers.options[3].disabled = true;
-      cantPers.options[4].disabled = true;
-      cantPers.options[5].disabled = true;
-    } else if (tipoHabitacion === "Triple Room") {
-      cantPers.options[1].disabled = false;
-      cantPers.options[2].disabled = false;
-      cantPers.options[3].disabled = true;
-      cantPers.options[4].disabled = true;
-      cantPers.options[5].disabled = true;
-    } else if (tipoHabitacion === "Multiple Room") {
-      cantPers.options[1].disabled = false;
-      cantPers.options[2].disabled = false;
-      cantPers.options[3].disabled = false;
-      cantPers.options[4].disabled = false;
-      cantPers.options[5].disabled = false;
+    let cantPers = document.getElementById("cantidadPersonas");
+    let myTipo = document.getElementById("tipoHabitacion");
+    if (tipoHab === "placeH") {
+      cantPers.value = "placeH";
+      myTipo.value = "placeH";
+      cantPers.options[0].disabled = true;
+      cantPers.options[1].hidden = true;
+      cantPers.options[2].hidden = true;
+      cantPers.options[3].hidden = true;
+      cantPers.options[4].hidden = true;
+      cantPers.options[5].hidden = true;
+      cantPers.options[6].hidden = true;
     }
-  }, [tipoHabitacion]);
+    if (tipoHab === "Single Room") {
+      myTipo.options[0].disabled = true;
+      cantPers.options[0].disabled = true;
+      cantPers.options[1].hidden = false;
+      cantPers.options[2].hidden = true;
+      cantPers.options[3].hidden = true;
+      cantPers.options[4].hidden = true;
+      cantPers.options[5].hidden = true;
+      cantPers.options[6].hidden = true;
+    } else if (tipoHab === "Double Room") {
+      myTipo.options[0].disabled = true;
+      cantPers.options[1].hidden = false;
+      cantPers.options[2].hidden = false;
+      cantPers.options[3].hidden = true;
+      cantPers.options[4].hidden = true;
+      cantPers.options[5].hidden = true;
+      cantPers.options[6].hidden = true;
+    } else if (tipoHab === "Triple Room") {
+      myTipo.options[0].disabled = true;
+      cantPers.options[1].hidden = false;
+      cantPers.options[2].hidden = false;
+      cantPers.options[3].hidden = false;
+      cantPers.options[4].hidden = true;
+      cantPers.options[5].hidden = true;
+      cantPers.options[6].hidden = true;
+    } else if (tipoHab === "Multiple Room") {
+      myTipo.options[0].disabled = true;
+      cantPers.options[1].hidden = false;
+      cantPers.options[2].hidden = false;
+      cantPers.options[3].hidden = false;
+      cantPers.options[4].hidden = false;
+      cantPers.options[5].hidden = false;
+      cantPers.options[6].hidden = false;
+    }
+  }, [tipoHab]);
+
+  // Handle Anular Form:
+  const handleAnular = () => {
+    setTipoHab("placeH");
+    picker1.reset();
+    picker2.reset();
+    picker3.reset();
+    setIsDisabled(true);
+    setData({
+      dniHuesped: "",
+      nombreHuesped: "",
+      apellidoHuesped: "",
+      direccionHuesped: "",
+      profesionHuesped: "",
+    });
+  };
+  // Handle Changes Form:
+  const handleChange = (e) => {
+    const newData = { ...data };
+    newData[e.target.id] = e.target.value;
+    setData(newData);
+    console.log(newData);
+  };
+  // Handle Submit:
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="section main-sect">
@@ -159,7 +222,12 @@ const Reservas = () => {
 
       {/* Formulario */}
       <div className="res-formContainer">
-        <form action="">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          id="formToBeDeleted"
+        >
           <div className="res-formCenter">
             {/* Reserva*/}
             <div className="res-formSection">
@@ -176,12 +244,15 @@ const Reservas = () => {
                     <select
                       className="res-select"
                       name="res-tipoHabitacion"
-                      id="res-habSelect"
+                      required
+                      id="tipoHabitacion"
                       onChange={(e) => {
                         getHabitacion(e);
+                        handleChange(e);
                       }}
-                      required
+                      value={data.tipoHabitacion}
                     >
+                      <option value="placeH">Seleccionar</option>
                       <option value="Single Room">Single Room</option>
                       <option value="Double Room">Double Room</option>
                       <option value="Triple Room">Triple Room</option>
@@ -196,8 +267,13 @@ const Reservas = () => {
                       className="res-select"
                       name="res-cantPersonas"
                       required
-                      id="res-cantPers"
+                      id="cantidadPersonas"
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                      value={data.cantidadPersonas}
                     >
+                      <option value="placeH">Seleccionar</option>
                       <option value="1" id="1per">
                         1
                       </option>
@@ -226,7 +302,6 @@ const Reservas = () => {
                   </div>
                   <div className="datePickerBtnsContainer">
                     <input
-                      id="datepickerDe"
                       type="text"
                       className="datePickerBtn"
                       placeholder="De"
@@ -235,23 +310,35 @@ const Reservas = () => {
                       onClick={() => {
                         picker1.open();
                       }}
+                      id="fechaDe"
+                      onChange={(e) => handleChange(e)}
+                      value={picker1.onSelect((date, formatedDate) => {
+                        data.fechaDe = formatedDate;
+                      })}
                     />
                     <input
-                      id="datepickerHasta"
                       type="text"
                       className="datePickerBtn"
                       placeholder="Hasta"
                       name="res-fechaHasta"
                       required
-                      onClick={() => {
-                        picker2.open();
-                      }}
                       style={
                         isDisabled
                           ? { background: "lightgray", cursor: "default" }
                           : { background: "#96baec", cursor: "pointer" }
                       }
                       disabled={isDisabled ? true : false}
+                      onClick={() => {
+                        picker2.open();
+                      }}
+                      onFocus={() => {
+                        picker2.open();
+                      }}
+                      id="fechaHasta"
+                      onChange={(e) => handleChange(e)}
+                      value={picker2.onSelect((date, formatedDate) => {
+                        data.fechaHasta = formatedDate;
+                      })}
                     />
                   </div>
                 </div>
@@ -266,36 +353,88 @@ const Reservas = () => {
               <div className="res-formInputsContainer res-facturacionContainer">
                 <div className="res-factSingleInput">
                   <label htmlFor="hues-dni">DNI:</label>
-                  <input type="text" name="hues-dni" required />
+                  <input
+                    type="text"
+                    name="hues-dni"
+                    required
+                    id="dniHuesped"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    value={data.dniHuesped}
+                  />
                 </div>
                 <div className="res-factSingleInput">
                   <label htmlFor="hues-nombre">Nombre:</label>
-                  <input type="text" name="hues-nombre" required />
+                  <input
+                    type="text"
+                    name="hues-nombre"
+                    required
+                    id="nombreHuesped"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    value={data.nombreHuesped}
+                  />
                 </div>
                 <div className="res-factSingleInput">
                   <label htmlFor="hues-apellido">Apellido:</label>
-                  <input type="text" name="hues-apellido" required />
+                  <input
+                    type="text"
+                    name="hues-apellido"
+                    required
+                    id="apellidoHuesped"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    value={data.apellidoHuesped}
+                  />
                 </div>
                 <div className="res-factSingleInput">
                   <label htmlFor="hues-fechaNac">Fecha Nac:</label>
                   <input
                     type="text"
                     name="hues-fechaNac"
-                    id="datepickerFechaNac"
                     required
                     placeholder="Seleccionar Fecha"
                     onClick={() => {
                       picker3.open();
                     }}
+                    onFocus={() => {
+                      picker3.open();
+                    }}
+                    id="fechaNacHuesped"
+                    onChange={(e) => handleChange(e)}
+                    value={picker3.onSelect((date, formatedDate) => {
+                      data.fechaNacHuesped = formatedDate;
+                    })}
                   />
                 </div>
                 <div className="res-factSingleInput">
                   <label htmlFor="hues-direccion">Direccion:</label>
-                  <input type="text" name="hues-direccion" required />
+                  <input
+                    type="text"
+                    name="hues-direccion"
+                    required
+                    id="direccionHuesped"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    value={data.direccionHuesped}
+                  />
                 </div>
                 <div className="res-factSingleInput">
                   <label htmlFor="hues-profesion">Profesion:</label>
-                  <input type="text" name="hues-profesion" required />
+                  <input
+                    type="text"
+                    name="hues-profesion"
+                    required
+                    id="profesionHuesped"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    value={data.profesionHuesped}
+                  />
                 </div>
               </div>
             </div>
@@ -310,7 +449,9 @@ const Reservas = () => {
               <button
                 type="button"
                 className="formBtn cancelBtn"
-                onClick="borrarCampos(); selectedToDefault();"
+                onClick={() => {
+                  handleAnular();
+                }}
               >
                 Anular
               </button>
