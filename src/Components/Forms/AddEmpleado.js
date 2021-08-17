@@ -187,7 +187,9 @@ const AddEmpleado = () => {
             </div>
           </div>
           <div className="emp-addEmpFormBtns">
-            <input type="submit" value="Agregar" className="formBtn" />
+            <button type="submit" className="formBtn">
+              Agregar
+            </button>
             <button
               type="button"
               className="formBtn cancelBtn"
