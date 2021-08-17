@@ -1,16 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MCDatepicker from "mc-datepicker";
 
-// PASAR STATES PARA DISABLE HASTABTN
 // FUNCTIONS ONCHANGE Y ONCLICK
 
 const Reservas = () => {
-  // Disable HASTA, hasta seleccionar DE.
-  // const hastaBtn = document.getElementById("datepickerHasta");
-  // console.log(hastaBtn);
-  // hastaBtn.disabled = true;
-  // hastaBtn.style.background = "lightgray";
-  // hastaBtn.style.cursor = "default";
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [tipoHabitacion, setTipoHabitacion] = useState("Triple Room");
+
   // Fecha De:
   const picker1 = MCDatepicker.create({
     el: "#datepickerDe",
@@ -44,11 +40,7 @@ const Reservas = () => {
   });
   let picker2 = document.getElementById("#datepickerHasta");
   picker1.onSelect((date) => {
-    // Habilitar HASTA:
-    // hastaBtn.disabled = false;
-    // hastaBtn.style.background = "#96baec"; // ColorBlue
-    // hastaBtn.style.cursor = "pointer";
-
+    setIsDisabled(false);
     // Settear Min Date:
     var myMin = new Date(date);
     myMin.setDate(date.getDate() + 1);
@@ -116,6 +108,52 @@ const Reservas = () => {
     customCancelBTN: "Anular",
   });
 
+  // Functions: Cantidad Personas.
+  const getHabitacion = (e) => {
+    // e.target.value = La Option.
+    if (e.target.value === "Single Room") {
+      setTipoHabitacion("Single Room");
+      let cantPers = document.getElementById("res-cantPers");
+      if (tipoHabitacion === "Single Room") {
+        cantPers.options[1].disabled = true;
+        cantPers.options[2].disabled = true;
+        cantPers.options[3].disabled = true;
+        cantPers.options[4].disabled = true;
+        cantPers.options[5].disabled = true;
+      }
+    } else if (e.target.value === "Double Room") {
+      setTipoHabitacion("Double Room");
+      let cantPers = document.getElementById("res-cantPers");
+      if (tipoHabitacion === "Double Room") {
+        cantPers.options[1].disabled = false;
+        cantPers.options[2].disabled = true;
+        cantPers.options[3].disabled = true;
+        cantPers.options[4].disabled = true;
+        cantPers.options[5].disabled = true;
+      }
+    } else if (e.target.value === "Triple Room") {
+      setTipoHabitacion("Triple Room");
+      let cantPers = document.getElementById("res-cantPers");
+      if (tipoHabitacion === "Triple Room") {
+        cantPers.options[1].disabled = false;
+        cantPers.options[2].disabled = false;
+        cantPers.options[3].disabled = true;
+        cantPers.options[4].disabled = true;
+        cantPers.options[5].disabled = true;
+      }
+    } else if (e.target.value === "Multiple Room") {
+      setTipoHabitacion("Multiple Room");
+      let cantPers = document.getElementById("res-cantPers");
+      if (tipoHabitacion === "Multiple Room") {
+        cantPers.options[1].disabled = false;
+        cantPers.options[2].disabled = false;
+        cantPers.options[3].disabled = false;
+        cantPers.options[4].disabled = false;
+        cantPers.options[5].disabled = false;
+      }
+    }
+  };
+
   return (
     <div className="section main-sect">
       {/* Title */}
@@ -136,12 +174,14 @@ const Reservas = () => {
               <div className="res-formInputsContainer">
                 <div className="res-formInputsTop">
                   <div className="res-singleInput">
-                    <label htmlFor="res-tipoHabitacion">Habitacion </label>
+                    <label htmlFor="res-tipoHabitacion">Habitacion</label>
                     <select
                       className="res-select"
                       name="res-tipoHabitacion"
                       id="res-habSelect"
-                      onChange="getHabitacion();"
+                      onChange={(e) => {
+                        getHabitacion(e);
+                      }}
                       required
                     >
                       <option value="Single Room">Single Room</option>
@@ -208,6 +248,12 @@ const Reservas = () => {
                       onClick={() => {
                         picker2.open();
                       }}
+                      style={
+                        isDisabled
+                          ? { background: "lightgray", cursor: "default" }
+                          : { background: "#96baec", cursor: "pointer" }
+                      }
+                      disabled={isDisabled ? true : false}
                     />
                   </div>
                 </div>
