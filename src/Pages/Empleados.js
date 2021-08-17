@@ -75,14 +75,14 @@ const Empleados = () => {
               <tbody>
                 {/* Admin Usuario */}
                 {admin.map((adm) => {
-                  const { id, username, password, usuEmpleado } = adm;
+                  const { usuarioId, username, password, usuEmpleado } = adm;
                   const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
                   const dia = fechaDate.getDate();
                   const mes = fechaDate.getMonth() + 1;
                   const anio = fechaDate.getFullYear();
                   const finalDate = dia + "/" + mes + "/" + anio;
                   return (
-                    <tr style={{ backgroundColor: "#DCE9F9" }} key={id}>
+                    <tr style={{ backgroundColor: "#DCE9F9" }} key={usuarioId}>
                       <td>{username}</td>
                       <td>{password}</td>
                       <td>{adm.usuEmpleado.dniEmpleado}</td>
@@ -98,7 +98,7 @@ const Empleados = () => {
 
                 {/* All Usuarios */}
                 {usuarios.map((usu) => {
-                  const { id, username, password, usuEmpleado } = usu;
+                  const { usuarioId, username, password, usuEmpleado } = usu;
                   const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
                   const dia = fechaDate.getDate();
                   const mes = fechaDate.getMonth() + 1;
@@ -106,7 +106,7 @@ const Empleados = () => {
                   const finalDate = dia + "/" + mes + "/" + anio;
 
                   return (
-                    <tr key={id}>
+                    <tr key={usuarioId}>
                       <td>{username}</td>
                       <td>{password}</td>
                       <td>{usuEmpleado.dniEmpleado}</td>
