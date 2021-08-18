@@ -10,10 +10,17 @@ import {
 /* ======================================================================== */
 // Local:
 export const usuariosEndpointLocal = "http://localhost:8080/api/usuarios";
+export const reservasEndpointLocal = "http://localhost:8080/api/reservas";
+export const confirmacionReservaLocal =
+  "http://localhost:8080/api/confirmacionReserva";
 
 // Heroku:
 export const usuariosEndpoint =
   "https://polotic-tpfinal.herokuapp.com/api/usuarios";
+export const reservasEndpoint =
+  "https://polotic-tpfinal.herokuapp.com/api/reservas";
+export const confirmacionReserva =
+  "https://polotic-tpfinal.herokuapp.com/api/confirmacionReserva";
 
 /* ======================================================================== */
 /* Nav Links */

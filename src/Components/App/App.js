@@ -9,6 +9,7 @@ import {
   Consultas,
   Empleados,
   Utiles,
+  ConfirmacinReserva,
 } from "../../Pages";
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/reservas">
           <Reservas></Reservas>
+        </Route>
+        <Route path="/confirmacionReserva">
+          <ConfirmacinReserva></ConfirmacinReserva>
         </Route>
         <Route path="/consultas">
           <Consultas></Consultas>

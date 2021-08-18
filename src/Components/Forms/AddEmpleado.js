@@ -5,7 +5,7 @@ import MCDatepicker from "mc-datepicker";
 
 import { useOpenFormsContext } from "../../Context/openForms_context";
 
-import { usuariosEndpoint } from "../../Utils/constants";
+import { usuariosEndpoint, usuariosEndpointLocal } from "../../Utils/constants";
 
 const AddEmpleado = () => {
   // Date Picker: Fecha Nac Empleado.
@@ -73,7 +73,7 @@ const AddEmpleado = () => {
       },
     };
     try {
-      axios.post(usuariosEndpoint, newUsuario);
+      axios.post(usuariosEndpointLocal, newUsuario);
       closeEmpForm();
       history.go(0);
     } catch (error) {
@@ -152,6 +152,7 @@ const AddEmpleado = () => {
                   type="text"
                   name="empFechaNac"
                   placeholder="Seleccionar Fecha"
+                  required
                   onFocus={() => {
                     picker.open();
                   }}

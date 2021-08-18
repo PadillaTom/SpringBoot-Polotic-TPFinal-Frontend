@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import MCDatepicker from "mc-datepicker";
+import axios from "axios";
+
+import { reservasEndpoint, reservasEndpointLocal } from "../Utils/constants";
 
 // FUNCTIONS ONCHANGE Y ONCLICK
 
@@ -19,11 +23,12 @@ const Reservas = () => {
     direccionHuesped: "",
     profesionHuesped: "",
   });
+  const history = useHistory();
 
   // Fecha De:
   const picker1 = MCDatepicker.create({
     el: "#fechaDe",
-    dateFormat: "dd-mm-yyyy",
+    dateFormat: "MM-dd-yyyy",
     minDate: new Date(),
     customWeekDays: [
       "Domingo",
@@ -64,7 +69,7 @@ const Reservas = () => {
   let picker2 = MCDatepicker.create({
     el: "#fechaHasta",
     minDate: new Date(picker2MinDate),
-    dateFormat: "dd-mm-yyyy",
+    dateFormat: "MM-dd-yyyy",
     customWeekDays: [
       "Domingo",
       "Lunes",
@@ -95,7 +100,7 @@ const Reservas = () => {
   //  Date Picker: Fecha Nacimiento Huesped
   const picker3 = MCDatepicker.create({
     el: "#fechaNacHuesped",
-    dateFormat: "dd-mm-yyyy",
+    dateFormat: "MM-dd-yyyy",
     customWeekDays: [
       "Domingo",
       "Lunes",
@@ -137,7 +142,6 @@ const Reservas = () => {
       setTipoHab("Multiple Room");
     }
   };
-
   useEffect(() => {
     let cantPers = document.getElementById("cantidadPersonas");
     let myTipo = document.getElementById("tipoHabitacion");
@@ -188,31 +192,44 @@ const Reservas = () => {
     }
   }, [tipoHab]);
 
-  // Handle Anular Form:
-  const handleAnular = () => {
-    setTipoHab("placeH");
-    picker1.reset();
-    picker2.reset();
-    picker3.reset();
-    setIsDisabled(true);
-    setData({
-      dniHuesped: "",
-      nombreHuesped: "",
-      apellidoHuesped: "",
-      direccionHuesped: "",
-      profesionHuesped: "",
-    });
-  };
   // Handle Changes Form:
   const handleChange = (e) => {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
-    console.log(newData);
   };
   // Handle Submit:
   const handleSubmit = (e) => {
     e.preventDefault();
+    const resFechaDe = new Date(data.fechaDe);
+    const resFechaHasta = new Date(data.fechaHasta);
+    const huesFechaNac = new Date(data.fechaNacHuesped);
+    const newReserva = {
+      cantidadPersonas: data.cantidadPersonas,
+      fechaDe: resFechaDe,
+      fechaHasta: resFechaHasta,
+      resHabitacion: {
+        tipoHabitacion: data.tipoHabitacion,
+      },
+      resHuesped: {
+        dniHuesped: data.dniHuesped,
+        nombreHuesped: data.nombreHuesped,
+        apellidoHuesped: data.apellidoHuesped,
+        fechaNacHuesped: huesFechaNac,
+        direccionHuesped: data.direccionHuesped,
+        profesionHuesped: data.profesionHuesped,
+      },
+    };
+    try {
+      axios.post(reservasEndpointLocal, newReserva);
+      history.push("/confirmacionReserva");
+    } catch (error) {
+      console.log(`Error Post Reserva: ${error}`);
+    }
+  };
+  // Handle Anular Form:
+  const handleAnular = () => {
+    history.go(0);
   };
 
   return (
@@ -307,7 +324,7 @@ const Reservas = () => {
                       placeholder="De"
                       name="res-fechaDe"
                       required
-                      onClick={() => {
+                      onFocus={() => {
                         picker1.open();
                       }}
                       id="fechaDe"
@@ -328,9 +345,6 @@ const Reservas = () => {
                           : { background: "#96baec", cursor: "pointer" }
                       }
                       disabled={isDisabled ? true : false}
-                      onClick={() => {
-                        picker2.open();
-                      }}
                       onFocus={() => {
                         picker2.open();
                       }}
