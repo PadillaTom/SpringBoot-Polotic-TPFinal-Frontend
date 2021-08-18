@@ -73,7 +73,7 @@ const AddEmpleado = () => {
       },
     };
     try {
-      axios.post(usuariosEndpointLocal, newUsuario);
+      axios.post(usuariosEndpoint, newUsuario);
       closeEmpForm();
       history.go(0);
     } catch (error) {

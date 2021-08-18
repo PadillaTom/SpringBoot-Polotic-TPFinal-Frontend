@@ -221,7 +221,7 @@ const Reservas = () => {
       },
     };
     try {
-      axios.post(reservasEndpointLocal, newReserva);
+      axios.post(reservasEndpoint, newReserva);
       history.push("/confirmacionReserva");
     } catch (error) {
       console.log(`Error Post Reserva: ${error}`);

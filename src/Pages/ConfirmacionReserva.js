@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import {
   confirmacionReservaEndpoint,
-  confirmacionReservaLocal,
+  confirmacionReservaEndpointLocal,
 } from "../Utils/constants";
 
 const ConfirmacionReserva = () => {
@@ -42,7 +42,7 @@ const ConfirmacionReserva = () => {
   };
 
   useEffect(() => {
-    fetchLastReserva(confirmacionReservaLocal);
+    fetchLastReserva(confirmacionReservaEndpoint);
   }, []);
 
   return (
