@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import MCDatepicker from "mc-datepicker";
 import axios from "axios";
 
 import { reservasEndpoint, reservasEndpointLocal } from "../Utils/constants";
+import ConfirmacionReserva from "./ConfirmacionReserva";
 
 // FUNCTIONS ONCHANGE Y ONCLICK
 
 const Reservas = () => {
+  const [redirect, setRedirect] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
   const [tipoHab, setTipoHab] = useState("placeH");
   const [picker2MinDate, setPicker2MinDate] = useState();
@@ -221,13 +223,18 @@ const Reservas = () => {
       },
     };
     try {
-      axios.post(reservasEndpoint, newReserva);
-      history.push("/confirmacionReserva");
+      axios.post(reservasEndpoint, newReserva).then((res) => {
+        res && setRedirect("/confirmacionReserva");
+      });
     } catch (error) {
       console.log(`Error Post Reserva: ${error}`);
     }
   };
+  if (redirect) {
+    return <Redirect push to={redirect}></Redirect>;
+  }
   // Handle Anular Form:
+
   const handleAnular = () => {
     history.go(0);
   };
