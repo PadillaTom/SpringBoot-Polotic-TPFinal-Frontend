@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import {
   confirmacionReservaEndpoint,
   confirmacionReservaEndpointLocal,
@@ -8,42 +7,57 @@ import {
 
 const ConfirmacionReserva = () => {
   const [resData, setResData] = useState({});
+  const [huesData, setHuesData] = useState(null);
+  const [usuData, setUsuData] = useState({});
+  const [habData, setHabData] = useState({});
+
   const [fecha1, setFecha1] = useState("");
   const [fecha2, setFecha2] = useState("");
   const [fecha3, setFecha3] = useState("");
 
   useEffect(() => {
+    let isUnmounted = false;
     const fetchLastReserva = async (url) => {
       await axios
         .get(url)
         .then((res) => {
-          setResData(res.data);
+          if (!isUnmounted) {
+            setResData(res.data);
+            const resIn = new Date(res.data.fechaDe);
+            const dia = resIn.getDate();
+            const mes = resIn.getMonth() + 1;
+            const anio = resIn.getFullYear();
+            const resInStr = dia + "/" + mes + "/" + anio;
+            setFecha1(resInStr);
+            const resOut = new Date(res.data.fechaHasta);
+            const dia1 = resOut.getDate();
+            const mes1 = resOut.getMonth() + 1;
+            const anio1 = resOut.getFullYear();
+            const resOutStr = dia1 + "/" + mes1 + "/" + anio1;
+            setFecha2(resOutStr);
+            const huesNac = new Date(res.data.resHuesped.fechaNacHuesped);
+            const dia2 = huesNac.getDate();
+            const mes2 = huesNac.getMonth() + 1;
+            const anio2 = huesNac.getFullYear();
+            const huesStr = dia2 + "/" + mes2 + "/" + anio2;
+            setFecha3(huesStr);
+            setHuesData(res.data.resHuesped);
+            setUsuData(res.data.resUsuario);
+            setHabData(res.data.resHabitacion);
+          }
         })
         .catch((err) => {
-          console.log(err);
+          if (!isUnmounted) {
+            console.log(err);
+          }
         });
+      return () => {
+        isUnmounted = true;
+      };
     };
-    fetchLastReserva(confirmacionReservaEndpoint);
+    fetchLastReserva(confirmacionReservaEndpointLocal);
   }, []);
-
-  const resIn = new Date(resData.fechaDe);
-  const dia = resIn.getDate();
-  const mes = resIn.getMonth() + 1;
-  const anio = resIn.getFullYear();
-  const resInStr = dia + "/" + mes + "/" + anio;
-  setFecha1(resInStr);
-  const resOut = new Date(resData.fechaHasta);
-  const dia1 = resOut.getDate();
-  const mes1 = resOut.getMonth() + 1;
-  const anio1 = resOut.getFullYear();
-  const resOutStr = dia1 + "/" + mes1 + "/" + anio1;
-  setFecha2(resOutStr);
-  const huesNac = new Date(resData.resHuesped.fechaNacHuesped);
-  const dia2 = huesNac.getDate();
-  const mes2 = huesNac.getMonth() + 1;
-  const anio2 = huesNac.getFullYear();
-  const huesStr = dia2 + "/" + mes2 + "/" + anio2;
-  setFecha3(huesStr);
+  // console.log(resData, huesData, habData, usuData);
 
   return (
     <div>
@@ -63,7 +77,7 @@ const ConfirmacionReserva = () => {
                   <div className="res-confSingleInput">
                     <label>Habitacion:</label>
                     <span>
-                      {resData?.resHabitacion?.nombreHabitacion}
+                      {habData?.nombreHabitacion}
                       {/* asd */}
                     </span>
                   </div>
@@ -99,21 +113,21 @@ const ConfirmacionReserva = () => {
                   <div className="res-confSingleInput">
                     <label>DNI:</label>
                     <span>
-                      {resData?.resHuesped?.dniHuesped}
+                      {huesData?.dniHuesped}
                       {/* asd */}
                     </span>
                   </div>
                   <div className="res-confSingleInput">
                     <label>Nombre</label>
                     <span>
-                      {resData?.resHuesped?.nombreHuesped}
+                      {huesData?.nombreHuesped}
                       {/* asd */}
                     </span>
                   </div>
                   <div className="res-confSingleInput">
                     <label>Apellido</label>
                     <span>
-                      {resData?.resHuesped?.apellidoHuesped}
+                      {huesData?.apellidoHuesped}
                       {/* asd */}
                     </span>
                   </div>
@@ -127,14 +141,14 @@ const ConfirmacionReserva = () => {
                   <div className="res-confSingleInput">
                     <label>Direccion:</label>
                     <span>
-                      {resData?.resHuesped?.direccionHuesped}
+                      {huesData?.direccionHuesped}
                       {/* asd */}
                     </span>
                   </div>
                   <div className="res-confSingleInput">
                     <label>Profesion:</label>
                     <span>
-                      {resData?.resHuesped?.profesionHuesped}
+                      {huesData?.profesionHuesped}
                       {/* asd */}
                     </span>
                   </div>
@@ -167,8 +181,8 @@ const ConfirmacionReserva = () => {
                 >
                   <label>Cargada Por: </label>
                   <span>
-                    {resData?.resUsuario?.usuEmpleado?.nombreEmpleado}{" "}
-                    {resData?.resUsuario?.usuEmpleado?.apellidoEmpleado}
+                    {usuData?.usuEmpleado?.nombreEmpleado}{" "}
+                    {usuData?.usuEmpleado?.apellidoEmpleado}
                     {/* asd */}
                   </span>
                 </div>
