@@ -148,7 +148,7 @@ const Reservas = () => {
     if (tipoHab === "placeH") {
       cantPers.value = "placeH";
       myTipo.value = "placeH";
-      cantPers.options[0].disabled = true;
+      cantPers.options[0].disabled = false;
       cantPers.options[1].hidden = true;
       cantPers.options[2].hidden = true;
       cantPers.options[3].hidden = true;
@@ -158,6 +158,8 @@ const Reservas = () => {
     }
     if (tipoHab === "Single Room") {
       myTipo.options[0].disabled = true;
+      cantPers.value = "1";
+      data.cantidadPersonas = cantPers.value;
       cantPers.options[0].disabled = true;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = true;
@@ -167,6 +169,8 @@ const Reservas = () => {
       cantPers.options[6].hidden = true;
     } else if (tipoHab === "Double Room") {
       myTipo.options[0].disabled = true;
+      cantPers.value = "1";
+      data.cantidadPersonas = cantPers.value;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = false;
       cantPers.options[3].hidden = true;
@@ -175,6 +179,8 @@ const Reservas = () => {
       cantPers.options[6].hidden = true;
     } else if (tipoHab === "Triple Room") {
       myTipo.options[0].disabled = true;
+      cantPers.value = "1";
+      data.cantidadPersonas = cantPers.value;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = false;
       cantPers.options[3].hidden = false;
@@ -183,6 +189,8 @@ const Reservas = () => {
       cantPers.options[6].hidden = true;
     } else if (tipoHab === "Multiple Room") {
       myTipo.options[0].disabled = true;
+      cantPers.value = "1";
+      data.cantidadPersonas = cantPers.value;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = false;
       cantPers.options[3].hidden = false;
@@ -190,7 +198,7 @@ const Reservas = () => {
       cantPers.options[5].hidden = false;
       cantPers.options[6].hidden = false;
     }
-  }, [tipoHab]);
+  }, [tipoHab, data]);
 
   // Handle Changes Form:
   const handleChange = (e) => {
@@ -221,7 +229,7 @@ const Reservas = () => {
       },
     };
     try {
-      axios.post(reservasEndpointLocal, newReserva).then((res) => {
+      axios.post(reservasEndpoint, newReserva).then((res) => {
         history.push("/confirmacionReserva");
       });
     } catch (error) {

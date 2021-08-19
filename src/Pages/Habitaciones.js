@@ -11,7 +11,8 @@ const Habitaciones = () => {
           Bienvenido: <span> Usuario </span>
         </h1>
       </div>
-      <div class="section-title-underline"></div>
+      <div className="section-title-underline"></div>
+
       {/* Title */}
       <h1 className="section-title">Habitaciones</h1>
 
@@ -27,18 +28,18 @@ const Habitaciones = () => {
             imageUrl,
           } = hab;
           return (
-            <article class="hab-cardContainer" key={habitacionId}>
-              <div class="hab-cardLeft">
+            <article className="hab-cardContainer" key={habitacionId}>
+              <div className="hab-cardLeft">
                 <img src={imageUrl} alt="Habitacion" />
               </div>
-              <div class="hab-cardRight">
-                <div class="hab-cardRightCenter">
-                  <div class="hab-cardRight-title">
+              <div className="hab-cardRight">
+                <div className="hab-cardRightCenter">
+                  <div className="hab-cardRight-title">
                     <p>#00{habitacionId}</p>
                     <h3>{nombreHabitacion}</h3>
                     <h6>Piso: 0{pisoHabitacion}</h6>
                   </div>
-                  <div class="hab-cardRight-info">
+                  <div className="hab-cardRight-info">
                     <p>Tipo: {tipoHabitacion}</p>
                     <span>${precioNocheHabitacion} / Noche</span>
                   </div>

@@ -55,7 +55,7 @@ const ConfirmacionReserva = () => {
         isUnmounted = true;
       };
     };
-    fetchLastReserva(confirmacionReservaEndpointLocal);
+    fetchLastReserva(confirmacionReservaEndpoint);
   }, []);
   // console.log(resData, huesData, habData, usuData);
 
