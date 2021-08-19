@@ -9,6 +9,7 @@ import { reservasEndpoint, reservasEndpointLocal } from "../Utils/constants";
 
 const Reservas = () => {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isHabitacionDispo, setIsHabitacionDispo] = useState(true);
   const [tipoHab, setTipoHab] = useState("placeH");
   const [picker2MinDate, setPicker2MinDate] = useState();
   const [data, setData] = useState({
@@ -229,8 +230,12 @@ const Reservas = () => {
       },
     };
     try {
-      axios.post(reservasEndpoint, newReserva).then((res) => {
-        history.push("/confirmacionReserva");
+      axios.post(reservasEndpointLocal, newReserva).then((res) => {
+        if (typeof res.data == "string") {
+          setIsHabitacionDispo(false);
+        } else {
+          history.push("/confirmacionReserva");
+        }
       });
     } catch (error) {
       console.log(`Error Post Reserva: ${error}`);
@@ -256,6 +261,22 @@ const Reservas = () => {
           id="formToBeDeleted"
         >
           <div className="res-formCenter">
+            {/* Hab NO Dispo */}
+            {!isHabitacionDispo && (
+              <div
+                style={{
+                  display: "grid",
+                  placeItems: "center",
+                  marginBottom: "2rem",
+                }}
+                className="res-noDispoContainer"
+              >
+                <h3 style={{ color: "red", letterSpacing: "1.4px" }}>
+                  Habitacion NO Disponible...
+                </h3>
+              </div>
+            )}
+
             {/* Reserva*/}
             <div className="res-formSection">
               <div className="res-formTitle">

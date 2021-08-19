@@ -73,9 +73,10 @@ const AddEmpleado = () => {
       },
     };
     try {
-      axios.post(usuariosEndpoint, newUsuario);
-      closeEmpForm();
-      history.go(0);
+      axios.post(usuariosEndpoint, newUsuario).then((res) => {
+        closeEmpForm();
+        history.go(0);
+      });
     } catch (error) {
       console.log(`Error Post Empleados: ${error}`);
     }

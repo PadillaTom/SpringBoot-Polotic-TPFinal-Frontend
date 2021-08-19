@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Navbar } from "../Navigation";
@@ -13,34 +13,45 @@ import {
 } from "../../Pages";
 
 function App() {
-  return (
-    <Router>
-      <Navbar></Navbar>
-      <Switch>
-        <Route path="/" exact>
-          <Homepage></Homepage>
-        </Route>
-        <Route path="/habitaciones">
-          <Habitaciones></Habitaciones>
-        </Route>
-        <Route path="/reservas">
-          <Reservas></Reservas>
-        </Route>
-        <Route path="/confirmacionReserva">
-          <ConfirmacinReserva></ConfirmacinReserva>
-        </Route>
-        <Route path="/consultas">
-          <Consultas></Consultas>
-        </Route>
-        <Route path="/empleados">
-          <Empleados></Empleados>
-        </Route>
-        <Route path="/utiles">
-          <Utiles></Utiles>
-        </Route>
-      </Switch>
-    </Router>
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  if (!isLoggedIn) {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            <Homepage></Homepage>
+          </Route>
+        </Switch>
+      </Router>
+    );
+  } else {
+    return (
+      <Router>
+        <Navbar></Navbar>
+        <Switch>
+          <Route path="/habitaciones">
+            <Habitaciones></Habitaciones>
+          </Route>
+          <Route path="/reservas">
+            <Reservas></Reservas>
+          </Route>
+          <Route path="/confirmacionReserva">
+            <ConfirmacinReserva></ConfirmacinReserva>
+          </Route>
+          <Route path="/consultas">
+            <Consultas></Consultas>
+          </Route>
+          <Route path="/empleados">
+            <Empleados></Empleados>
+          </Route>
+          <Route path="/utiles">
+            <Utiles></Utiles>
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;

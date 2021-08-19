@@ -5,6 +5,8 @@ import {
   confirmacionReservaEndpointLocal,
 } from "../Utils/constants";
 
+import { transformarFecha } from "../Utils/helpers";
+
 const ConfirmacionReserva = () => {
   const [resData, setResData] = useState({});
   const [huesData, setHuesData] = useState(null);
@@ -23,24 +25,9 @@ const ConfirmacionReserva = () => {
         .then((res) => {
           if (!isUnmounted) {
             setResData(res.data);
-            const resIn = new Date(res.data.fechaDe);
-            const dia = resIn.getDate();
-            const mes = resIn.getMonth() + 1;
-            const anio = resIn.getFullYear();
-            const resInStr = dia + "/" + mes + "/" + anio;
-            setFecha1(resInStr);
-            const resOut = new Date(res.data.fechaHasta);
-            const dia1 = resOut.getDate();
-            const mes1 = resOut.getMonth() + 1;
-            const anio1 = resOut.getFullYear();
-            const resOutStr = dia1 + "/" + mes1 + "/" + anio1;
-            setFecha2(resOutStr);
-            const huesNac = new Date(res.data.resHuesped.fechaNacHuesped);
-            const dia2 = huesNac.getDate();
-            const mes2 = huesNac.getMonth() + 1;
-            const anio2 = huesNac.getFullYear();
-            const huesStr = dia2 + "/" + mes2 + "/" + anio2;
-            setFecha3(huesStr);
+            setFecha1(transformarFecha(res.data.fechaDe));
+            setFecha2(transformarFecha(res.data.fechaHasta));
+            setFecha3(transformarFecha(res.data.resHuesped.fechaNacHuesped));
             setHuesData(res.data.resHuesped);
             setUsuData(res.data.resUsuario);
             setHabData(res.data.resHabitacion);
@@ -55,9 +42,8 @@ const ConfirmacionReserva = () => {
         isUnmounted = true;
       };
     };
-    fetchLastReserva(confirmacionReservaEndpoint);
+    fetchLastReserva(confirmacionReservaEndpointLocal);
   }, []);
-  // console.log(resData, huesData, habData, usuData);
 
   return (
     <div>

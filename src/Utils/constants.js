@@ -13,6 +13,10 @@ export const usuariosEndpointLocal = "http://localhost:8080/api/usuarios";
 export const reservasEndpointLocal = "http://localhost:8080/api/reservas";
 export const confirmacionReservaEndpointLocal =
   "http://localhost:8080/api/confirmacionReserva";
+export const consultaPorDniEndpointLocal =
+  "http://localhost:8080/api/consultaResPorDni";
+export const consultaPorFechaEndpointLocal =
+  "http://localhost:8080/api/consultaPorFecha";
 
 // Heroku:
 export const usuariosEndpoint =
@@ -21,6 +25,10 @@ export const reservasEndpoint =
   "https://polotic-tpfinal.herokuapp.com/api/reservas";
 export const confirmacionReservaEndpoint =
   "https://polotic-tpfinal.herokuapp.com/api/confirmacionReserva";
+export const consultaPorDniEndpoint =
+  "https://polotic-tpfinal.herokuapp.com/api/consultaResPorDni";
+export const consultaPorFechaEndpoint =
+  "https://polotic-tpfinal.herokuapp.com/api/consultaPorFecha";
 
 /* ======================================================================== */
 /* Nav Links */

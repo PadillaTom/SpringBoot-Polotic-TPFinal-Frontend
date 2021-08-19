@@ -8,6 +8,8 @@ import { useOpenFormsContext } from "../Context/openForms_context";
 
 import { deleteEmpIcon, editEmpIcon } from "../Assets/Icons";
 
+import { transformarFecha } from "../Utils/helpers";
+
 const Empleados = () => {
   const { addEmpIsOpen, openEmpForm } = useOpenFormsContext();
   const {
@@ -76,11 +78,6 @@ const Empleados = () => {
                 {/* Admin Usuario */}
                 {admin.map((adm) => {
                   const { usuarioId, username, password, usuEmpleado } = adm;
-                  const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
-                  const dia = fechaDate.getDate();
-                  const mes = fechaDate.getMonth() + 1;
-                  const anio = fechaDate.getFullYear();
-                  const finalDate = dia + "/" + mes + "/" + anio;
                   return (
                     <tr style={{ backgroundColor: "#DCE9F9" }} key={usuarioId}>
                       <td>{username}</td>
@@ -88,7 +85,7 @@ const Empleados = () => {
                       <td>{adm.usuEmpleado.dniEmpleado}</td>
                       <td>{adm.usuEmpleado.nombreEmpleado}</td>
                       <td>{adm.usuEmpleado.apellidoEmpleado}</td>
-                      <td>{finalDate}</td>
+                      <td>{transformarFecha(usuEmpleado.fechaNacEmpleado)}</td>
                       <td>{adm.usuEmpleado.direccionEmpleado}</td>
                       <td>{adm.usuEmpleado.cargoEmpleado}</td>
                       <td></td>
@@ -99,12 +96,6 @@ const Empleados = () => {
                 {/* All Usuarios */}
                 {usuarios.map((usu) => {
                   const { usuarioId, username, password, usuEmpleado } = usu;
-                  const fechaDate = new Date(usuEmpleado.fechaNacEmpleado);
-                  const dia = fechaDate.getDate();
-                  const mes = fechaDate.getMonth() + 1;
-                  const anio = fechaDate.getFullYear();
-                  const finalDate = dia + "/" + mes + "/" + anio;
-
                   return (
                     <tr key={usuarioId}>
                       <td>{username}</td>
@@ -112,7 +103,7 @@ const Empleados = () => {
                       <td>{usuEmpleado.dniEmpleado}</td>
                       <td>{usuEmpleado.nombreEmpleado}</td>
                       <td>{usuEmpleado.apellidoEmpleado}</td>
-                      <td>{finalDate}</td>
+                      <td>{transformarFecha(usuEmpleado.fechaNacEmpleado)}</td>
                       <td>{usuEmpleado.direccionEmpleado}</td>
                       <td>{usuEmpleado.cargoEmpleado}</td>
                       <td className="emp-tableIconsContainer">
