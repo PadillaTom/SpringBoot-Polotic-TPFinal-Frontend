@@ -43,11 +43,6 @@ export const UsuariosProvider = ({ children }) => {
     }
   };
 
-  // *** ADMIN USUARIO ***
-  // const fetchAdminUsuario = async(myAPI) => {
-  //   dispatch({type: GET_ADMIN_USUARIO})
-  // }
-
   // *** Component Mount ***
   useEffect(() => {
     fetchUsuarios(usuariosEndpoint);

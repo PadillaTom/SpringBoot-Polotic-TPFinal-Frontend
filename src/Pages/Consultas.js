@@ -12,6 +12,8 @@ import { transformarFecha } from "../Utils/helpers";
 
 const Consultas = () => {
   const [isActive, setIsActive] = useState("listaHues");
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [picker2MinDate, setPicker2MinDate] = useState();
   const [showResponse, setShowResponse] = useState("");
   const [noResults, setNoResults] = useState("");
 
@@ -23,6 +25,11 @@ const Consultas = () => {
   const [empForm, setEmpForm] = useState({ dniEmpleado: "" });
   const [fechaForm, setFechaForm] = useState({
     fechaDeCarga: "",
+  });
+  const [porHyF, setPorHyF] = useState({
+    fechaDe: "",
+    fechaHasta: "",
+    dniHuesped: "",
   });
 
   const handleActive = (e) => {
@@ -60,6 +67,75 @@ const Consultas = () => {
     customClearBTN: "Borrar",
     customCancelBTN: "Anular",
   });
+  // Fecha De:
+  const picker2 = MCDatepicker.create({
+    el: "#fechaDe",
+    dateFormat: "MM-dd-yyyy",
+    customWeekDays: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+    ],
+    customMonths: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sept.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+    customClearBTN: "Borrar",
+    customCancelBTN: "Anular",
+  });
+
+  picker2.onSelect((date) => {
+    setIsDisabled(false);
+    // Settear Min Date:
+    var myMin = date;
+    myMin.setDate(date.getDate() + 1);
+    setPicker2MinDate(myMin);
+  });
+  // Date Picker HASTA:
+  let picker3 = MCDatepicker.create({
+    el: "#fechaHasta",
+    minDate: new Date(picker2MinDate),
+    dateFormat: "MM-dd-yyyy",
+    customWeekDays: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+    ],
+    customMonths: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sep.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+    customClearBTN: "Borrar",
+    customCancelBTN: "Anular",
+  });
 
   // ::::::::::::::::::
   //  1. Requests
@@ -69,9 +145,8 @@ const Consultas = () => {
     const newRes = {
       fechaDeCarga: fechaDate,
     };
-    console.log(fechaDate);
     axios
-      .post(consultaPorFechaEndpointLocal, newRes)
+      .post(consultaPorFechaEndpoint, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -89,7 +164,7 @@ const Consultas = () => {
 
   const empReq = (e) => {
     axios
-      .post(consultaPorDniEndpointLocal, empForm)
+      .post(consultaPorDniEndpoint, empForm)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -107,7 +182,7 @@ const Consultas = () => {
 
   const huesReq = () => {
     axios
-      .get(consultaPorDniEndpointLocal)
+      .get(consultaPorDniEndpoint)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -124,10 +199,26 @@ const Consultas = () => {
   };
 
   const huesDateReq = () => {
+    const fecha1 = new Date(porHyF.fechaDe);
+    const fecha2 = new Date(porHyF.fechaHasta);
+    const newRes = {
+      fechaDe: fecha1,
+      fechaHasta: fecha2,
+      resHuesped: {
+        dniHuesped: porHyF.dniHuesped,
+      },
+    };
     axios
-      .get()
+      .post(`${consultaPorFechaEndpoint}/porHyF`, newRes)
       .then((res) => {
-        setHuesDateRes(res.data);
+        if (res.data.length > 0) {
+          setNoResults("");
+          setHuesDateRes(res.data);
+          setShowResponse("displayPorHyF");
+        } else {
+          setNoResults("noHyFRes");
+          setShowResponse("");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -145,7 +236,11 @@ const Consultas = () => {
     const newData = { ...fechaForm };
     newData[e.target.id] = e.target.value;
     setFechaForm(newData);
-    console.log(newData);
+  };
+  const handleHyF = (e) => {
+    const newData = { ...porHyF };
+    newData[e.target.id] = e.target.value;
+    setPorHyF(newData);
   };
 
   return (
@@ -540,7 +635,12 @@ const Consultas = () => {
             <h3>Ingresar DNI de Huesped y el rango de Fechas deseadas.</h3>
           </div>
           <div className="singleScreen-buscador">
-            <form action="SvConsPorHyF" method="GET" id="formHyF">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                huesDateReq();
+              }}
+            >
               <div className="res-factSingleInput">
                 <label htmlFor="buscador">DNI Huesped </label>
                 <input
@@ -548,6 +648,10 @@ const Consultas = () => {
                   required
                   name="hues-dni"
                   style={{ background: "none", textAlign: "center" }}
+                  id="dniHuesped"
+                  onChange={(e) => {
+                    handleHyF(e);
+                  }}
                 />
               </div>
               <div style={{ margin: "1rem 0rem" }}>
@@ -565,22 +669,37 @@ const Consultas = () => {
                   }}
                 >
                   <input
-                    id="datepickerDeHF"
+                    id="fechaDe"
                     type="text"
                     className="datePickerBtn"
                     placeholder="De"
                     name="res-fechaDe"
                     required
                     style={{ margin: "0rem 0.7rem" }}
+                    onFocus={() => {
+                      picker2.open();
+                    }}
+                    onChange={(e) => handleHyF(e)}
+                    value={picker2.onSelect((date, formatedDate) => {
+                      porHyF.fechaDe = formatedDate;
+                    })}
                   />
                   <input
-                    id="datepickerHastaHF"
+                    id="fechaHasta"
                     type="text"
                     className="datePickerBtn"
                     placeholder="Hasta"
                     name="res-fechaHasta"
                     required
+                    disabled={isDisabled ? true : false}
                     style={{ margin: "0rem 0.7rem" }}
+                    onFocus={() => {
+                      picker3.open();
+                    }}
+                    onChange={(e) => handleHyF(e)}
+                    value={picker3.onSelect((date, formatedDate) => {
+                      porHyF.fechaHasta = formatedDate;
+                    })}
                   />
                 </div>
               </div>
@@ -598,10 +717,65 @@ const Consultas = () => {
           </div>
           {/* <!--*** Response ***--> */}
           <div style={{ marginTop: "5rem" }}>
-            <div
-              className="emp-tableContainer singleScreen-resultsContainer"
-              id="HFContent"
-            ></div>
+            <div className="emp-tableContainer singleScreen-resultsContainer">
+              {noResults === "noHyFRes" ? (
+                <>
+                  <h3 className="buscador-notFound">
+                    No se encuentran Reservas para la Fecha seleccionada.
+                  </h3>
+                </>
+              ) : (
+                <></>
+              )}
+              {showResponse === "displayPorHyF" ? (
+                <React.Fragment>
+                  <div className="section-title-underline"></div>
+                  <h2>Resultados</h2>
+                  <table style={{ marginBottom: "2rem" }}>
+                    <thead>
+                      <tr>
+                        <th>N° Res </th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Habitacion</th>
+                        <th>N° Huespedes</th>
+                        <th>Huesped Dni</th>
+                        <th>Huesped</th>
+                        <th>Empleado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {huesDateRes?.map((r) => {
+                        const {
+                          reservaId,
+                          fechaDe,
+                          fechaHasta,
+                          resHabitacion,
+                          cantidadPersonas,
+                          resHuesped,
+                          resUsuario,
+                        } = r;
+                        const { dniHuesped, apellidoHuesped } = resHuesped;
+                        return (
+                          <tr key={reservaId}>
+                            <td>{reservaId}</td>
+                            <td>{transformarFecha(fechaDe)}</td>
+                            <td>{transformarFecha(fechaHasta)}</td>
+                            <td>{resHabitacion.tipoHabitacion}</td>
+                            <td>{cantidadPersonas}</td>
+                            <td>{dniHuesped}</td>
+                            <td>{apellidoHuesped}</td>
+                            <td>{resUsuario.usuEmpleado.nombreEmpleado}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </React.Fragment>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )}
+            </div>
           </div>
         </div>
       </div>

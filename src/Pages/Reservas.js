@@ -230,7 +230,7 @@ const Reservas = () => {
       },
     };
     try {
-      axios.post(reservasEndpointLocal, newReserva).then((res) => {
+      axios.post(reservasEndpoint, newReserva).then((res) => {
         if (typeof res.data == "string") {
           setIsHabitacionDispo(false);
         } else {
