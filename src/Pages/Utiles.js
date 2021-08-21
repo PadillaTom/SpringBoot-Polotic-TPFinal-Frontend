@@ -148,7 +148,6 @@ const Utiles = () => {
   };
   const empFechaReq = () => {
     const fechaDate = new Date(empFecha.fechaDeCarga1);
-    fechaDate.addHours(7);
     const newRes = {
       fechaDeCarga: fechaDate,
       resUsuario: {
