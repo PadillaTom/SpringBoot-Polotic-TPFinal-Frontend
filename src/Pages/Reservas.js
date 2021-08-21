@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 import React, { useState, useEffect } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import MCDatepicker from "mc-datepicker";
@@ -207,12 +208,20 @@ const Reservas = () => {
     newData[e.target.id] = e.target.value;
     setData(newData);
   };
+
   // Handle Submit:
+  Date.prototype.addHours = function (hour) {
+    this.setTime(this.getTime() + hour * 60 * 60 * 1000);
+    return this;
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const resFechaDe = new Date(data.fechaDe);
     const resFechaHasta = new Date(data.fechaHasta);
     const huesFechaNac = new Date(data.fechaNacHuesped);
+    resFechaDe.addHours(7);
+    resFechaHasta.addHours(7);
+    huesFechaNac.addHours(7);
     const newReserva = {
       cantidadPersonas: data.cantidadPersonas,
       fechaDe: resFechaDe,

@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 import React, { useState } from "react";
 import MCDatepicker from "mc-datepicker";
 import axios from "axios";
@@ -141,8 +142,13 @@ const Utiles = () => {
   // ::::::::::::::::::
   //  2. Requests
   // ::::::::::::::::::
+  Date.prototype.addHours = function (hour) {
+    this.setTime(this.getTime() + hour * 60 * 60 * 1000);
+    return this;
+  };
   const empFechaReq = () => {
     const fechaDate = new Date(empFecha.fechaDeCarga1);
+    fechaDate.addHours(7);
     const newRes = {
       fechaDeCarga: fechaDate,
       resUsuario: {
@@ -169,6 +175,7 @@ const Utiles = () => {
   };
   const ganDiariasReq = () => {
     const fechaDate = new Date(ganDiarias.fechaDeCarga2);
+    fechaDate.addHours(7);
     const newRes = {
       fechaDeCarga: fechaDate,
     };
@@ -190,6 +197,7 @@ const Utiles = () => {
   };
   const ganMensualesReq = () => {
     const fechaDate = new Date(ganMensuales.fechaDeCarga3);
+    fechaDate.addHours(7);
     const newRes = {
       fechaDeCarga: fechaDate,
     };

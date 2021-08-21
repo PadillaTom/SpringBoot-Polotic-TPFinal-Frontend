@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 import React, { useState } from "react";
 import axios from "axios";
 import MCDatepicker from "mc-datepicker";
@@ -140,8 +141,14 @@ const Consultas = () => {
   // ::::::::::::::::::
   //  1. Requests
   // ::::::::::::::::::
+  Date.prototype.addHours = function (hour) {
+    this.setTime(this.getTime() + hour * 60 * 60 * 1000);
+    return this;
+  };
+
   const fechaReq = () => {
     const fechaDate = new Date(fechaForm.fechaDeCarga);
+    fechaDate.addHours(7);
     const newRes = {
       fechaDeCarga: fechaDate,
     };
@@ -201,6 +208,8 @@ const Consultas = () => {
   const huesDateReq = () => {
     const fecha1 = new Date(porHyF.fechaDe);
     const fecha2 = new Date(porHyF.fechaHasta);
+    fecha1.addHours(7);
+    fecha2.addHours(7);
     const newRes = {
       fechaDe: fecha1,
       fechaHasta: fecha2,
