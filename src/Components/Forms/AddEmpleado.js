@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -55,6 +56,11 @@ const AddEmpleado = () => {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
+  };
+
+  Date.prototype.addHours = function (hour) {
+    this.setTime(this.getTime() + hour * 60 * 60 * 1000);
+    return this;
   };
 
   const handleSubmit = (e) => {
