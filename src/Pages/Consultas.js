@@ -146,7 +146,7 @@ const Consultas = () => {
       fechaDeCarga: fechaDate,
     };
     axios
-      .post(consultaPorFechaEndpointLocal, newRes)
+      .post(consultaPorFechaEndpoint, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
