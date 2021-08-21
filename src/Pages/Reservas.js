@@ -14,7 +14,7 @@ const Reservas = () => {
   const [picker2MinDate, setPicker2MinDate] = useState();
   const [data, setData] = useState({
     tipoHabitacion: "",
-    cantidadPersonas: "",
+    cantidadPersonas: "1",
     fechaDe: "",
     fechaHasta: "",
     dniHuesped: "",
@@ -159,7 +159,7 @@ const Reservas = () => {
     }
     if (tipoHab === "Single Room") {
       myTipo.options[0].disabled = true;
-      cantPers.value = "1";
+      cantPers.value = data.cantidadPersonas;
       data.cantidadPersonas = cantPers.value;
       cantPers.options[0].disabled = true;
       cantPers.options[1].hidden = false;
@@ -170,7 +170,7 @@ const Reservas = () => {
       cantPers.options[6].hidden = true;
     } else if (tipoHab === "Double Room") {
       myTipo.options[0].disabled = true;
-      cantPers.value = "1";
+      cantPers.value = data.cantidadPersonas;
       data.cantidadPersonas = cantPers.value;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = false;
@@ -180,7 +180,7 @@ const Reservas = () => {
       cantPers.options[6].hidden = true;
     } else if (tipoHab === "Triple Room") {
       myTipo.options[0].disabled = true;
-      cantPers.value = "1";
+      cantPers.value = data.cantidadPersonas;
       data.cantidadPersonas = cantPers.value;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = false;
@@ -190,7 +190,7 @@ const Reservas = () => {
       cantPers.options[6].hidden = true;
     } else if (tipoHab === "Multiple Room") {
       myTipo.options[0].disabled = true;
-      cantPers.value = "1";
+      cantPers.value = data.cantidadPersonas;
       data.cantidadPersonas = cantPers.value;
       cantPers.options[1].hidden = false;
       cantPers.options[2].hidden = false;
@@ -230,7 +230,7 @@ const Reservas = () => {
       },
     };
     try {
-      axios.post(reservasEndpointLocal, newReserva).then((res) => {
+      axios.post(reservasEndpoint, newReserva).then((res) => {
         if (typeof res.data == "string") {
           setIsHabitacionDispo(false);
         } else {

@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import MCDatepicker from "mc-datepicker";
 import axios from "axios";
 
-import { consultaPorFechaEndpointLocal } from "../Utils/constants";
+import {
+  consultaPorFechaEndpoint,
+  consultaPorFechaEndpointLocal,
+} from "../Utils/constants";
 import { transformarFecha } from "../Utils/helpers";
 
 const Utiles = () => {
@@ -149,7 +152,7 @@ const Utiles = () => {
       },
     };
     axios
-      .post(`${consultaPorFechaEndpointLocal}/resDiariasEmpleado`, newRes)
+      .post(`${consultaPorFechaEndpoint}/resDiariasEmpleado`, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -170,7 +173,7 @@ const Utiles = () => {
       fechaDeCarga: fechaDate,
     };
     axios
-      .post(consultaPorFechaEndpointLocal, newRes)
+      .post(consultaPorFechaEndpoint, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -191,7 +194,7 @@ const Utiles = () => {
       fechaDeCarga: fechaDate,
     };
     axios
-      .post(`${consultaPorFechaEndpointLocal}/ganMensuales`, newRes)
+      .post(`${consultaPorFechaEndpoint}/ganMensuales`, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");

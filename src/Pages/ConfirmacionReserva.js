@@ -42,7 +42,7 @@ const ConfirmacionReserva = () => {
         isUnmounted = true;
       };
     };
-    fetchLastReserva(confirmacionReservaEndpointLocal);
+    fetchLastReserva(confirmacionReservaEndpoint);
   }, []);
 
   return (

@@ -59,7 +59,8 @@ const AddEmpleado = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fechaDate = new Date(data.fechaNacEmpleado);
+    const fechaDate = new Date(data.fechaNacEmpleado).addHours(7);
+    console.log(fechaDate);
     const newUsuario = {
       username: data.username,
       password: data.password,
@@ -73,7 +74,7 @@ const AddEmpleado = () => {
       },
     };
     try {
-      axios.post(usuariosEndpointLocal, newUsuario).then((res) => {
+      axios.post(usuariosEndpoint, newUsuario).then((res) => {
         closeEmpForm();
         history.go(0);
       });
