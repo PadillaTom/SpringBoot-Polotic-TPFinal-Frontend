@@ -73,7 +73,7 @@ const AddEmpleado = () => {
       },
     };
     try {
-      axios.post(usuariosEndpoint, newUsuario).then((res) => {
+      axios.post(usuariosEndpointLocal, newUsuario).then((res) => {
         closeEmpForm();
         history.go(0);
       });

@@ -45,7 +45,7 @@ export const UsuariosProvider = ({ children }) => {
 
   // *** Component Mount ***
   useEffect(() => {
-    fetchUsuarios(usuariosEndpoint);
+    fetchUsuarios(usuariosEndpointLocal);
   }, []);
 
   return (

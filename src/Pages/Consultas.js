@@ -146,7 +146,7 @@ const Consultas = () => {
       fechaDeCarga: fechaDate,
     };
     axios
-      .post(consultaPorFechaEndpoint, newRes)
+      .post(consultaPorFechaEndpointLocal, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -164,7 +164,7 @@ const Consultas = () => {
 
   const empReq = (e) => {
     axios
-      .post(consultaPorDniEndpoint, empForm)
+      .post(consultaPorDniEndpointLocal, empForm)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -182,7 +182,7 @@ const Consultas = () => {
 
   const huesReq = () => {
     axios
-      .get(consultaPorDniEndpoint)
+      .get(consultaPorDniEndpointLocal)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
@@ -209,7 +209,7 @@ const Consultas = () => {
       },
     };
     axios
-      .post(`${consultaPorFechaEndpoint}/porHyF`, newRes)
+      .post(`${consultaPorFechaEndpointLocal}/porHyF`, newRes)
       .then((res) => {
         if (res.data.length > 0) {
           setNoResults("");
