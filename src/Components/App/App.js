@@ -19,7 +19,7 @@ function App() {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact>
+          <Route path="/login" exact>
             <Homepage></Homepage>
           </Route>
         </Switch>
@@ -30,7 +30,7 @@ function App() {
       <Router>
         <Navbar></Navbar>
         <Switch>
-          <Route path="/habitaciones">
+          <Route path="/">
             <Habitaciones></Habitaciones>
           </Route>
           <Route path="/reservas">
