@@ -8,7 +8,7 @@ const Navbar = () => {
     <div className="navigationContainer">
       <div className="navigationCenter">
         <div className="nav-logoContainer">
-          <Link to="/habitaciones">
+          <Link to="/">
             <h1>Mi Hotel</h1>
           </Link>
         </div>
