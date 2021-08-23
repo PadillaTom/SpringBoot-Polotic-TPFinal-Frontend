@@ -5,3 +5,5 @@ export const GET_USUARIOS_ERROR = "GET_USUARIOS_ERROR";
 // Open Forms:
 export const OPEN_ADD_EMP_FORM = "OPEN_ADD_EMP_FORM";
 export const CLOSE_ADD_EMP_FORM = "CLOSE_ADD_EMP_FORM";
+export const OPEN_DEL_EMP_FORM = "OPEN_DEL_EMP_FORM";
+export const CLOSE_DEL_EMP_FORM = "CLOSE_DEL_EMP_FORM";

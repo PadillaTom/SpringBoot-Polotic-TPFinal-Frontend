@@ -1,2 +1,3 @@
 import AddEmpleado from "./AddEmpleado";
-export { AddEmpleado };
+import DeleteEmpModal from "./DeleteEmpModal";
+export { AddEmpleado, DeleteEmpModal };

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Error, Loading } from "../Components/Utils";
-import { AddEmpleado } from "../Components/Forms/";
+import { AddEmpleado, DeleteEmpModal } from "../Components/Forms/";
 
 import { useUsuariosContext } from "../Context/usuarios_context";
 import { useOpenFormsContext } from "../Context/openForms_context";
@@ -11,13 +11,20 @@ import { deleteEmpIcon, editEmpIcon } from "../Assets/Icons";
 import { transformarFecha } from "../Utils/helpers";
 
 const Empleados = () => {
-  const { addEmpIsOpen, openEmpForm } = useOpenFormsContext();
+  const [deleteEmpId, setDeleteEmpId] = useState(null);
+  const { addEmpIsOpen, openEmpForm, deleteEmpIsOpen, openDelEmpForm } =
+    useOpenFormsContext();
+
   const {
     usuarios,
     usuarioAdmin: admin,
     usuarios_loading,
     usuarios_error,
   } = useUsuariosContext();
+
+  const eraseDeleteId = () => {
+    setDeleteEmpId(null);
+  };
 
   if (usuarios_error) {
     return <Error></Error>;
@@ -116,6 +123,10 @@ const Empleados = () => {
                           src={deleteEmpIcon}
                           alt="Borrar Empleado"
                           className="emp-tableIcon"
+                          onClick={() => {
+                            setDeleteEmpId(usuarioId);
+                            openDelEmpForm();
+                          }}
                         ></img>
                       </td>
                     </tr>
@@ -125,6 +136,14 @@ const Empleados = () => {
             </table>
           )}
         </div>
+
+        {/* Modal */}
+        {deleteEmpIsOpen && (
+          <DeleteEmpModal
+            toDelete={deleteEmpId}
+            cancelDelete={eraseDeleteId}
+          ></DeleteEmpModal>
+        )}
       </div>
     </div>
   );

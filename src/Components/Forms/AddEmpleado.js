@@ -66,7 +66,6 @@ const AddEmpleado = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fechaDate = new Date(data.fechaNacEmpleado).addHours(7);
-    console.log(fechaDate);
     const newUsuario = {
       username: data.username,
       password: data.password,

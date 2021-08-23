@@ -548,7 +548,7 @@ a {
 
 /**** MODAL ****/
 .emp-Modal {
-  display: none;
+  display: grid;
   place-items: center;
   position: fixed;
   z-index: 100000;
