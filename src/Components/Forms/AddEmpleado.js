@@ -6,7 +6,7 @@ import MCDatepicker from "mc-datepicker";
 
 import { useOpenFormsContext } from "../../Context/openForms_context";
 
-import { usuariosEndpoint, usuariosEndpointLocal } from "../../Utils/constants";
+import { usuariosEndpoint } from "../../Utils/constants";
 
 const AddEmpleado = () => {
   // Date Picker: Fecha Nac Empleado.

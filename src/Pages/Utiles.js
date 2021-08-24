@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import MCDatepicker from "mc-datepicker";
 import axios from "axios";
 
-import {
-  consultaPorFechaEndpoint,
-  consultaPorFechaEndpointLocal,
-} from "../Utils/constants";
+import { consultaPorFechaEndpoint } from "../Utils/constants";
 import { transformarFecha } from "../Utils/helpers";
 
 const Utiles = () => {

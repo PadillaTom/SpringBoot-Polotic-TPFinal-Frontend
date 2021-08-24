@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { useOpenFormsContext } from "../../Context/openForms_context";
 
-import { usuariosEndpoint, usuariosEndpointLocal } from "../../Utils/constants";
+import { usuariosEndpoint } from "../../Utils/constants";
 
 const DeleteEmpModal = ({ cancelDelete, toDelete }) => {
   const history = useHistory();

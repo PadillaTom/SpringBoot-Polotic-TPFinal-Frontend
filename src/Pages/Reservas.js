@@ -1,6 +1,6 @@
 /* eslint-disable no-extend-native */
 import React, { useState, useEffect } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import MCDatepicker from "mc-datepicker";
 import axios from "axios";
 

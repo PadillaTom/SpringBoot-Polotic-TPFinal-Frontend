@@ -5,7 +5,7 @@ import { createBrowserHistory } from "history";
 import axios from "axios";
 import MCDatepicker from "mc-datepicker";
 
-import { usuariosEndpoint, usuariosEndpointLocal } from "../Utils/constants";
+import { usuariosEndpoint } from "../Utils/constants";
 
 import { transformarFecha } from "../Utils/helpers";
 

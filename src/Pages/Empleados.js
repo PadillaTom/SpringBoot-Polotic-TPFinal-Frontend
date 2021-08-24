@@ -39,7 +39,7 @@ const Empleados = () => {
         {/* <!--*** Add Empleado ***--> */}
         <div className="emp-currentSession">
           <h1>
-            Usuario Actual: <span> Usuario </span>
+            Usuario Actual: <span> AdminHotel </span>
           </h1>
         </div>
 

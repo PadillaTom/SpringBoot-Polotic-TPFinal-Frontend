@@ -8,7 +8,7 @@ const Habitaciones = () => {
       {/* Welcome Section */}
       <div className="hab-welcomeSect">
         <h1>
-          Bienvenido: <span> Usuario </span>
+          Bienvenido: <span> AdminHotel </span>
         </h1>
       </div>
       <div className="section-title-underline"></div>

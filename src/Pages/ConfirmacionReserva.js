@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  confirmacionReservaEndpoint,
-  confirmacionReservaEndpointLocal,
-} from "../Utils/constants";
+import { confirmacionReservaEndpoint } from "../Utils/constants";
 
 import { transformarFecha } from "../Utils/helpers";
 

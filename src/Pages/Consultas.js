@@ -6,8 +6,6 @@ import MCDatepicker from "mc-datepicker";
 import {
   consultaPorDniEndpoint,
   consultaPorFechaEndpoint,
-  consultaPorDniEndpointLocal,
-  consultaPorFechaEndpointLocal,
 } from "../Utils/constants";
 import { transformarFecha } from "../Utils/helpers";
 

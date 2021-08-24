@@ -3,7 +3,7 @@ import React from "react";
 const Loading = () => {
   return (
     <div>
-      <h2>...Loading, Please wait.</h2>
+      <h3>...Cargando, espere por favor.</h3>
     </div>
   );
 };
