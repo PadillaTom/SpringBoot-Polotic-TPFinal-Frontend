@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Error, Loading } from "../Components/Utils";
 import { AddEmpleado, DeleteEmpModal } from "../Components/Forms/";
@@ -114,11 +115,13 @@ const Empleados = () => {
                       <td>{usuEmpleado.direccionEmpleado}</td>
                       <td>{usuEmpleado.cargoEmpleado}</td>
                       <td className="emp-tableIconsContainer">
-                        <img
-                          src={editEmpIcon}
-                          alt="Editar Empleado"
-                          className="emp-tableIcon"
-                        ></img>
+                        <Link to={`empleados/${usuarioId}`}>
+                          <img
+                            src={editEmpIcon}
+                            alt="Editar Empleado"
+                            className="emp-tableIcon"
+                          ></img>
+                        </Link>
                         <img
                           src={deleteEmpIcon}
                           alt="Borrar Empleado"

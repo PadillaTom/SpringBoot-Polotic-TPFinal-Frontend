@@ -5,6 +5,7 @@ import Reservas from "./Reservas";
 import ConfirmacinReserva from "./ConfirmacionReserva";
 import Empleados from "./Empleados";
 import Utiles from "./Utiles";
+import EdicionEmpleado from "./EdicionEmpleado";
 
 export {
   Homepage,
@@ -14,4 +15,5 @@ export {
   ConfirmacinReserva,
   Empleados,
   Utiles,
+  EdicionEmpleado,
 };

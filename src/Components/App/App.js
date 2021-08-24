@@ -10,6 +10,7 @@ import {
   Empleados,
   Utiles,
   ConfirmacinReserva,
+  EdicionEmpleado,
 } from "../../Pages";
 
 function App() {
@@ -42,11 +43,14 @@ function App() {
           <Route path="/consultas">
             <Consultas></Consultas>
           </Route>
-          <Route path="/empleados">
+          <Route path="/empleados" exact>
             <Empleados></Empleados>
           </Route>
           <Route path="/utiles">
             <Utiles></Utiles>
+          </Route>
+          <Route path="/empleados/:id">
+            <EdicionEmpleado></EdicionEmpleado>
           </Route>
         </Switch>
       </Router>
